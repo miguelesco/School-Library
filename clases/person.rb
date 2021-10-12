@@ -16,7 +16,7 @@ class Person
     is_of_age || @parent_permission
   end
 
-  def validate_name 
+  def validate_name
     @name = @corrector.correct_name(@name)
   end
 
@@ -29,4 +29,4 @@ end
 
 person = Person.new(21, 'Juan')
 
-puts person.validate_name 
+puts person.validate_name
