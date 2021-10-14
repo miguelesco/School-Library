@@ -1,5 +1,7 @@
 require_relative 'clases/student'
 require_relative 'clases/teacher'
+require_relative 'clases/book'
+require_relative 'clases/library'
 
 
 module SpecialFuntions
@@ -25,16 +27,35 @@ module SpecialFuntions
     else 
       puts 'Invalid input'
     end
-    puts ' '
-    display_first_ones()
-    first_one_selected(option: gets.chomp.to_i)
+    finish_program()
+  end
+
+  def create_a_book
+    print 'Title: '
+    title = gets.chomp
+    print 'Author: '
+    author = gets.chomp
+    book = Book.new(title, author)
+    library.add_book(book)
+    puts 'Book created successfully'
+    finish_program()
+  end
+
+  def list_all_books
+    arr_of_books = library.list_books
+    arr_of_books.each do |book|
+      puts "Title: '#{book.title}', Author: #{book.author}"
+    end
+    finish_program()
   end
 end
 
 class InputOptions
   include SpecialFuntions
+  attr_accessor :library
 
   def initialize
+    @library = Library.new
     display_first_ones
     first_one_selected(option: gets.chomp.to_i)
   end
@@ -51,13 +72,13 @@ class InputOptions
   def first_one_selected(option: number)
     case option
       when 1
-        puts 'List all books'
+        list_all_books()
       when 2
         puts 'List all people'
       when 3
         create_a_person()
       when 4
-        puts 'Create a book'
+        create_a_book()
       when 4
         puts 'Create a book'
       when 5
@@ -69,6 +90,12 @@ class InputOptions
       else
         puts 'Invalid option'
     end
+  end
+
+  def finish_program
+    puts ' '
+    display_first_ones()
+    first_one_selected(option: gets.chomp.to_i)
   end
 end
 
