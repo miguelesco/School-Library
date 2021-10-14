@@ -32,7 +32,3 @@ class Person
     Rental.new(date, self, book)
   end
 end
-
-person = Person.new(21, 'Juan')
-
-puts person.validate_name
