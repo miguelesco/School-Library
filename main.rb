@@ -16,12 +16,14 @@ module SpecialFuntions
       print "Has parent permission? [Y/N]: "
       has_parent_permission = gets.chomp.upcase == 'Y'
       student = Student.new(age, name, parent_permission: has_parent_permission)
+      people << student
       puts 'Person created successfully'
 
     elsif input == 2
       print 'Specialization: ' 
       specialization = gets.chomp
       teacher = Teacher.new(specialization, age, name)
+      people << teacher
       puts 'Person created successfully'
 
     else 
@@ -48,14 +50,21 @@ module SpecialFuntions
     end
     finish_program()
   end
+
+  def list_all_people
+    people.each do |person|
+      puts  "[#{person.class}] Name: #{person.name}, ID: #{person.id} Age: #{person.age}"
+    end
+  end
 end
 
 class InputOptions
   include SpecialFuntions
-  attr_accessor :library
+  attr_accessor :library, :people
 
   def initialize
     @library = Library.new
+    @people = []
     display_first_ones
     first_one_selected(option: gets.chomp.to_i)
   end
@@ -74,7 +83,7 @@ class InputOptions
       when 1
         list_all_books()
       when 2
-        puts 'List all people'
+        list_all_people()
       when 3
         create_a_person()
       when 4
