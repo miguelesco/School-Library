@@ -2,6 +2,7 @@ require_relative 'clases/student'
 require_relative 'clases/teacher'
 require_relative 'clases/book'
 require_relative 'clases/library'
+require_relative 'clases/rental'
 
 
 module SpecialFuntions
@@ -55,6 +56,32 @@ module SpecialFuntions
     people.each do |person|
       puts  "[#{person.class}] Name: #{person.name}, ID: #{person.id} Age: #{person.age}"
     end
+    finish_program()
+  end
+
+  def create_a_rental
+    arr_of_books = library.list_books
+    puts 'Select a book from the following list by number'
+    arr_of_books.each_with_index do |book, index|
+      puts " #{index}) Title: '#{book.title}', Author: #{book.author}"
+    end
+    select_book = gets.chomp.to_i
+    puts ' '
+
+    puts 'Select a person from the following list by number (not id)'
+    people.each_with_index do |person, index|
+      puts " #{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id} Age: #{person.age}"
+    end
+    select_person = gets.chomp.to_i
+    puts ' '
+
+    puts 'Select a date (yyyy/mm/dd)'
+    date = gets.chomp
+
+    rental = Rental.new(date, people[select_person], arr_of_books[select_book])
+    library.add_rental(rental)
+
+    puts 'Rental created successfully'
   end
 end
 
@@ -88,10 +115,8 @@ class InputOptions
         create_a_person()
       when 4
         create_a_book()
-      when 4
-        puts 'Create a book'
       when 5
-        puts 'Create a rental'
+        create_a_rental()
       when 6
         puts 'List all rentals for a given person id'
       when 7
