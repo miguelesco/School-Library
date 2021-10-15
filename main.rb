@@ -1,7 +1,7 @@
 require_relative 'clases/library'
 require_relative 'modules/main_functions'
 
-class InputOptions
+class App
   include SpecialFuntions
   attr_accessor :library, :people
 
@@ -55,7 +55,7 @@ end
 
 def main()
   puts 'Welcome to School Library App!'
-  InputOptions.new
+  App.new
 end
 
 main
