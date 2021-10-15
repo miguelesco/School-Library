@@ -8,8 +8,8 @@ class Person
   def initialize(age, name = 'Unknown', parent_permission: true)
     @id = rand(1..100)
     @corrector = Corrector.new
-    @name = name 
-    validate_name()
+    @name = name
+    validate_name
     @age = age
     @parent_permission = parent_permission
     @rental = []

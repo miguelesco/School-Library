@@ -1,5 +1,4 @@
 require_relative 'clases/library'
-require_relative 'clases/library'
 require_relative 'modules/main_functions'
 
 class InputOptions
@@ -24,6 +23,7 @@ class InputOptions
     puts '7 - Exit'
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
   def first_one_selected(option: number)
     case option
     when 1
@@ -44,6 +44,7 @@ class InputOptions
       puts 'Invalid option'
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
 
   def finish_program
     puts ' '

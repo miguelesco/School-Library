@@ -82,7 +82,7 @@ module SpecialFuntions
     library.add_rental(rental)
 
     puts 'Rental created successfully'
-    finish_program()
+    finish_program
   end
 
   def list_all_rentals_by_id
@@ -91,13 +91,13 @@ module SpecialFuntions
     person_selected = people.find { |person| person.id == id }
     library.rentals.each do |rental|
       if rental.person == person_selected
-        puts "Rentals: "
+        puts 'Rentals: '
         puts "Date #{rental.date}, Book: '#{rental.book.title}' by: #{rental.book.author}"
-      else 
+      else
         puts 'No rentals found by this user'
       end
     end
-    finish_program()
+    finish_program
   end
 
   def exit_program
