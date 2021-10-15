@@ -4,7 +4,6 @@ require_relative 'clases/book'
 require_relative 'clases/library'
 require_relative 'clases/rental'
 
-
 module SpecialFuntions
   def create_a_person
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]:'
@@ -13,24 +12,25 @@ module SpecialFuntions
     age = gets.chomp.to_i
     print 'Name: '
     name = gets.chomp
-    if input == 1
-      print "Has parent permission? [Y/N]: "
+    case input
+    when 1
+      print 'Has parent permission? [Y/N]: '
       has_parent_permission = gets.chomp.upcase == 'Y'
       student = Student.new(age, name, parent_permission: has_parent_permission)
       people << student
       puts 'Person created successfully'
 
-    elsif input == 2
-      print 'Specialization: ' 
+    when 2
+      print 'Specialization: '
       specialization = gets.chomp
       teacher = Teacher.new(specialization, age, name)
       people << teacher
       puts 'Person created successfully'
 
-    else 
+    else
       puts 'Invalid input'
     end
-    finish_program()
+    finish_program
   end
 
   def create_a_book
@@ -41,7 +41,7 @@ module SpecialFuntions
     book = Book.new(title, author)
     library.add_book(book)
     puts 'Book created successfully'
-    finish_program()
+    finish_program
   end
 
   def list_all_books
@@ -49,14 +49,14 @@ module SpecialFuntions
     arr_of_books.each do |book|
       puts "Title: '#{book.title}', Author: #{book.author}"
     end
-    finish_program()
+    finish_program
   end
 
   def list_all_people
     people.each do |person|
-      puts  "[#{person.class}] Name: #{person.name}, ID: #{person.id} Age: #{person.age}"
+      puts "[#{person.class}] Name: #{person.name}, ID: #{person.id} Age: #{person.age}"
     end
-    finish_program()
+    finish_program
   end
 
   def create_a_rental
@@ -82,6 +82,22 @@ module SpecialFuntions
     library.add_rental(rental)
 
     puts 'Rental created successfully'
+    finish_program()
+  end
+
+  def list_all_rentals_by_id
+    print 'ID of the person: '
+    id = gets.chomp.to_i
+    person_selected = people.find { |person| person.id == id }
+    library.rentals.each do |rental|
+      if rental.person == person_selected
+        puts "Rentals: "
+        puts "Date #{rental.date}, Book: '#{rental.book.title}' by: #{rental.book.author}"
+      else 
+        puts 'No rentals found by this user'
+      end
+    end
+    finish_program()
   end
 end
 
@@ -95,6 +111,7 @@ class InputOptions
     display_first_ones
     first_one_selected(option: gets.chomp.to_i)
   end
+
   def display_first_ones
     puts 'Please choose an option by enterin a number:'
     puts '1 - List all books'
@@ -105,38 +122,38 @@ class InputOptions
     puts '6 - List all rentals for a given person id'
     puts '7 - Exit'
   end
+
   def first_one_selected(option: number)
     case option
-      when 1
-        list_all_books()
-      when 2
-        list_all_people()
-      when 3
-        create_a_person()
-      when 4
-        create_a_book()
-      when 5
-        create_a_rental()
-      when 6
-        puts 'List all rentals for a given person id'
-      when 7
-        puts 'Exit'
-      else
-        puts 'Invalid option'
+    when 1
+      list_all_books
+    when 2
+      list_all_people
+    when 3
+      create_a_person
+    when 4
+      create_a_book
+    when 5
+      create_a_rental
+    when 6
+      list_all_rentals_by_id
+    when 7
+      puts 'Exit'
+    else
+      puts 'Invalid option'
     end
   end
 
   def finish_program
     puts ' '
-    display_first_ones()
+    display_first_ones
     first_one_selected(option: gets.chomp.to_i)
   end
 end
 
-def main ()
+def main()
   puts 'Welcome to School Library App!'
-  options = InputOptions.new
-
+  InputOptions.new
 end
 
-main()
+main

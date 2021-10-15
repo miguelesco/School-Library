@@ -1,7 +1,9 @@
-class Library 
-  attr_accessor :list_books
+class Library
+  attr_accessor :list_books, :rentals
+
   def initialize()
     @list_books = []
+    @rentals = []
   end
 
   def add_book(book)
@@ -9,10 +11,6 @@ class Library
   end
 
   def add_rental(rental)
-    @list_books.each do |book|
-      if book.title == rental.book.title
-        book.rental = rental
-      end
-    end
+    @rentals << rental
   end
 end
